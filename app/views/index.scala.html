@@ -1,0 +1,9 @@
+@(message: String, user: securesocial.core.Identity)
+
+@if(user==null) {
+	@main(message){
+	}
+}else{
+	@main_restricted(message){
+	}
+}

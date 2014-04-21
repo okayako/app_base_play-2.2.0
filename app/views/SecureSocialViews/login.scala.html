@@ -1,0 +1,38 @@
+@(loginForm: Form[(String,String)], errorMsg: Option[String] = None)(implicit request: RequestHeader)
+
+@import helper._
+@import securesocial.core.Registry
+@import securesocial.core.AuthenticationMethod._
+@import securesocial.core.providers.UsernamePasswordProvider.UsernamePassword
+
+@views.html.main(Messages("securesocial.login.title")) {
+
+<div class="col-md-8 col-lg-8">
+
+<div class="panel panel-default">
+
+	<div class="panel-heading">
+		<i class="fa fa-sign-in fa-fw"></i> Login information
+	</div>
+	<div class="panel-body">
+		Do login and enter to admin the app. 
+	</div>
+</div>
+</div>
+<div class="col-md-4 col-lg-4">
+
+<div class="panel panel-default">
+
+	<div class="panel-heading">
+		<i class="fa fa-sign-in fa-fw"></i> Login in
+	</div>
+	<div class="panel-body">
+	@defining( Registry.providers.all.values.filter( _.id != UsernamePassword) ) { externalProviders =>
+		@Registry.providers.get(UsernamePassword).map { up =>
+			@provider("userpass", Some(loginForm))
+		}
+	} 
+	</div>
+</div>
+</div>
+}
